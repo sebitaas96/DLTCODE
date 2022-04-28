@@ -1,0 +1,8 @@
+@import 'vars';
+
+@import '~bootstrap';
+@import "~bootstrap/scss/mixins/_breakpoints";
+
+body {
+    background-color: $gray;
+}
