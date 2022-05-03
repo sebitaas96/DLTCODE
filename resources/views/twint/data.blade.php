@@ -1,8 +1,5 @@
 
-<html>
-
-    <head>
- 
+    
         <style>
            input[type="checkbox"]{
             visibility :hidden;
@@ -34,13 +31,8 @@
             .container-fluid{
                 text-align:center;
             }
-
-
         </style>
-    </head>
-
-    <body>
-   
+    
 
         <div class="container-fluid">
             <div class="" >
@@ -161,7 +153,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="container-fluid vh-100">
+        <div class="container-fluid vh-100">
             <div class="" style="margin-top:20px">
                 
                 <div class="col-md-12 p-5 bg-light">
@@ -171,17 +163,13 @@
                             <th id="btn-check-id_head" style="display: none;">ID</th>
                             <th id="btn-check-conversation_id_head" style="display: none;">Conversation ID</th>
                             <th id="btn-check-created_at_head" style="display: none;">Created at</th>
-                          
                             <th id="btn-check-date_head" style="display: table-cell;">Date</th>
                             <th id="btn-check-time_head" style="display: none;">Time</th>
                             <th id="btn-check-timezone_head" style="display: none;">Timezone</th>
                             <th id="btn-check-user_id_head" style="display: none;">User ID</th>
-                        
                             <th id="btn-check-username_head" style="display: table-cell;">Username</th>
-                        
                             <th id="btn-check-name_head" style="display: table-cell;">Name</th>
                             <th id="btn-check-place_head" style="display: none;">Place</th>
-                         
                             <th id="btn-check-tweet_head" style="display: table-cell;">Tweet</th>
                             <th id="btn-check-language_head" style="display: none;">Language</th>
                             <th id="btn-check-mentions_head" style="display: none;">Mentions</th>
@@ -212,6 +200,35 @@
                     </div>
                 </div>
             </div>
-        </div> -->
-    </body>
-</html>
+        </div>
+        <script type="text/javascript">
+            function hide_table(col_name)
+            {
+                var checkbox_val=document.getElementById(col_name).value;
+                if(checkbox_val=="hide")
+                {
+                    var all_col=document.getElementsByClassName(col_name);
+                    for(var i=0;i<all_col.length;i++)
+                    {
+                        all_col[i].style.display="none";
+                    }
+                    document.getElementById(col_name+"_head").style.display="none";
+                    document.getElementById(col_name).value="show";
+                }
+                    
+                else
+                {
+                    var all_col=document.getElementsByClassName(col_name);
+                    for(var i=0;i<all_col.length;i++)
+                    {
+                        all_col[i].style.display="table-cell";
+                    }
+                    document.getElementById(col_name+"_head").style.display="table-cell";
+                    document.getElementById(col_name).value="hide";
+                }
+            }
+
+        </script>
+ 
+
+
