@@ -35,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/twint' , function(){
         return view('twint');
     })->name('twint');
+    Route::get('/twint-data' , function(){
+        return view('twint-data');
+    })->name('twint-data');
+    
 });
 
 require __DIR__.'/auth.php';
