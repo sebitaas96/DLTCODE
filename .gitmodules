@@ -1,0 +1,3 @@
+[submodule "src/twint"]
+	path = src/twint
+	url = "https://github.com/twintproject/twint.git@origin/master#egg=twint"
