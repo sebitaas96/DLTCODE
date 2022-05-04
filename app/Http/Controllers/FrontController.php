@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\PhoneSearch;
+use App\Services\Twint;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -28,6 +29,7 @@ class FrontController extends Controller
     }
 
 
+
     public function operatorSearch(Request $request, PhoneSearch $phoneSearch)
     {
         $phone = $request->phone;
@@ -48,15 +50,64 @@ class FrontController extends Controller
         }
     }
 
+    public function twintPanelStore(Request $request, Twint $twintService)
+    {
+
+        $alert = "Error, no se pudo realizar la petición correctamente";
+        if ($twintService->search($request->input()) != null) {
+            $alert = "Petición realizada satisfactoriamente";
+            $twintService->parseJson();
+        }
+        return view('twint')->with(['alert' => $alert]);
+    }
+
+    public function twintDataTable()
+    {
+        $path  = storage_path() . "/twint";
+        //$files = $this->scan_dir($path);
+        $files = array_diff($this->scan_dir($path), array('.', '..'));
+        $data = [];
+        foreach ($files as $file) {
+            $remove_extension = str_replace(".json", "", $file);
+            $aux = explode('-', $remove_extension);
+            $data[] = [[$aux[0], date("H:i:s d/m", $aux[1])], $file];
+        }
+        return view('twint.table')->with(['datas' => $data]);
+    }
+
+    public function twintDataShow($load)
+    {
+        $path = storage_path() . "/twint/${load}";
+        $data = json_decode(file_get_contents($path), true); 
+        return view('twint.data')->with(['tweets' => $data]);
+    }
+
     public function policy()
     {
         return $this->getPolicyResponse('privacidad');
-
     }
 
     public function cookies()
     {
         return $this->getPolicyResponse('cookies');
+    }
+
+    private function scan_dir($dir)
+    {
+        echo(storage_path());
+        echo(public_path());
+        $ignored = array('.', '..', '.svn', '.htaccess');
+
+        $files = [];
+        foreach (scandir($dir) as $file) {
+            if (in_array($file, $ignored)) continue;
+            $files[$file] = filemtime($dir . '/' . $file);
+        }
+
+        arsort($files);
+        $files = array_keys($files);
+
+        return ($files) ? $files : false;
     }
 
     private function getPolicyResponse($policy)

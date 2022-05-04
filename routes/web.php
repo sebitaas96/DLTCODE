@@ -32,9 +32,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/twint' , function(){
-        return view('twint');
+    Route::get('/twint',function(){
+        return view('twint')->with(['alert'=>null]);
     })->name('twint');
+    Route::post('/twint',
+    FrontController::class.'@twintPanelStore')->name('twint.panel.post');
+    Route::get('/twint/data', FrontController::class.'@twintDataTable')->name('twint.data');
+
+    Route::get('/twint/data/{load}}', FrontController::class.'@twintDataShow')->name('twint.data.show');
 });
 
 require __DIR__.'/auth.php';
